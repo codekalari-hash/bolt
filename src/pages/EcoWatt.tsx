@@ -86,129 +86,142 @@ export function EcoWatt() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">EcoWatt</h1>
-        <Button onClick={() => setShowModal(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add Usage
-        </Button>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+          EcoWatt
+        </h1>
+        <button
+          onClick={() => setShowModal(true)}
+          className="w-12 h-12 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-lg hover:shadow-xl active:scale-95 transition-all"
+        >
+          <Plus className="w-6 h-6 text-white" strokeWidth={2.5} />
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardBody>
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center">
-                <Zap className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
-              </div>
+      <div className="space-y-4">
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-orange-600/20 blur-xl group-hover:blur-2xl transition-all" />
+          <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-3xl p-6 border border-yellow-200/50 dark:border-yellow-800/50 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Monthly Usage</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {summary.monthlyUsage} kWh
+                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">Monthly Usage</p>
+                <p className="text-4xl font-bold bg-gradient-to-br from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+                  {summary.monthlyUsage}
                 </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">kWh consumed</p>
+              </div>
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-3xl flex items-center justify-center shadow-2xl transform -rotate-6 group-hover:-rotate-12 transition-transform">
+                <Zap className="w-8 h-8 text-white" strokeWidth={2.5} />
               </div>
             </div>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody>
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Monthly Cost</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  ${summary.monthlyCost}
-                </p>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody>
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">vs Last Month</p>
-                <p className={`text-2xl font-bold ${summary.changePercentage > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                  {summary.changePercentage > 0 ? '+' : ''}{summary.changePercentage}%
-                </p>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Daily Usage Trend</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <LineChart data={dailyTrend} color="bg-yellow-500" />
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Appliance Breakdown</CardTitle>
-        </CardHeader>
-        <CardBody>
-          {appliances.length > 0 ? (
-            <BarChart
-              data={appliances.map((a) => ({
-                label: a.name,
-                value: a.usage,
-                color: 'bg-yellow-500',
-              }))}
-            />
-          ) : (
-            <p className="text-center text-gray-600 dark:text-gray-400 py-8">
-              No appliance data available. Add your first energy usage entry to see breakdown.
-            </p>
-          )}
-        </CardBody>
-      </Card>
-
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <CardTitle>Energy Saving Tips</CardTitle>
           </div>
-        </CardHeader>
-        <CardBody>
-          <ul className="space-y-2 text-sm text-blue-900 dark:text-blue-300">
-            <li>• Unplug devices when not in use to reduce phantom power</li>
-            <li>• Use LED bulbs - they use 75% less energy than incandescent</li>
-            <li>• Set AC to 24°C to balance comfort and efficiency</li>
-            <li>• Run dishwasher only when full to maximize efficiency</li>
-          </ul>
-        </CardBody>
-      </Card>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/20 blur-xl group-hover:blur-2xl transition-all" />
+            <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-3xl p-5 border border-green-200/50 dark:border-green-800/50 shadow-xl">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg mb-3">
+                <DollarSign className="w-6 h-6 text-white" strokeWidth={2.5} />
+              </div>
+              <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Monthly Cost</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">${summary.monthlyCost}</p>
+            </div>
+          </div>
+
+          <div className="relative group">
+            <div className={`absolute inset-0 bg-gradient-to-br ${summary.changePercentage > 0 ? 'from-red-500/20 to-orange-600/20' : 'from-green-500/20 to-emerald-600/20'} blur-xl group-hover:blur-2xl transition-all`} />
+            <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-3xl p-5 border border-gray-200/50 dark:border-gray-800/50 shadow-xl">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg mb-3 bg-gradient-to-br ${summary.changePercentage > 0 ? 'from-red-500 to-orange-600' : 'from-green-500 to-emerald-600'}`}>
+                <TrendingUp className="w-6 h-6 text-white" strokeWidth={2.5} />
+              </div>
+              <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">vs Last Month</p>
+              <p className={`text-2xl font-bold ${summary.changePercentage > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                {summary.changePercentage > 0 ? '+' : ''}{summary.changePercentage}%
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-yellow-600/20 blur-xl" />
+          <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-3xl p-5 border border-amber-200/50 dark:border-amber-800/50 shadow-xl">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Daily Usage Trend</h3>
+            <LineChart data={dailyTrend} color="bg-yellow-500" />
+          </div>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 blur-xl" />
+          <div className="relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-3xl p-5 border border-orange-200/50 dark:border-orange-800/50 shadow-xl">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Appliance Breakdown</h3>
+            {appliances.length > 0 ? (
+              <BarChart
+                data={appliances.map((a) => ({
+                  label: a.name,
+                  value: a.usage,
+                  color: 'bg-orange-500',
+                }))}
+              />
+            ) : (
+              <p className="text-center text-gray-600 dark:text-gray-400 py-8">
+                No appliance data available. Add your first energy usage entry to see breakdown.
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-cyan-600/20 blur-xl" />
+          <div className="relative bg-blue-500/10 dark:bg-blue-900/20 backdrop-blur-xl rounded-3xl p-5 border border-blue-200/50 dark:border-blue-800/50 shadow-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Lightbulb className="w-5 h-5 text-white" strokeWidth={2.5} />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Energy Saving Tips</h3>
+            </div>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2" />
+                <p className="text-sm text-gray-700 dark:text-gray-300">Unplug devices when not in use to reduce phantom power</p>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2" />
+                <p className="text-sm text-gray-700 dark:text-gray-300">Use LED bulbs - they use 75% less energy than incandescent</p>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2" />
+                <p className="text-sm text-gray-700 dark:text-gray-300">Set AC to 24°C to balance comfort and efficiency</p>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2" />
+                <p className="text-sm text-gray-700 dark:text-gray-300">Run dishwasher only when full to maximize efficiency</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50">
+          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-t-3xl sm:rounded-3xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-700/50">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
                 Add Energy Usage
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:scale-110 transition-transform"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Date
                 </label>
                 <Input
@@ -216,10 +229,11 @@ export function EcoWatt() {
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   required
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 focus:border-yellow-500 dark:focus:border-yellow-500 focus:ring-0 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Appliance Name
                 </label>
                 <Input
@@ -228,10 +242,11 @@ export function EcoWatt() {
                   value={formData.appliance_name}
                   onChange={(e) => setFormData({ ...formData, appliance_name: e.target.value })}
                   required
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 focus:border-yellow-500 dark:focus:border-yellow-500 focus:ring-0 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Usage (kWh)
                 </label>
                 <Input
@@ -241,10 +256,11 @@ export function EcoWatt() {
                   value={formData.usage_kwh}
                   onChange={(e) => setFormData({ ...formData, usage_kwh: e.target.value })}
                   required
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 focus:border-yellow-500 dark:focus:border-yellow-500 focus:ring-0 transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Cost ($)
                 </label>
                 <Input
@@ -254,20 +270,23 @@ export function EcoWatt() {
                   value={formData.cost}
                   onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
                   required
+                  className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 focus:border-yellow-500 dark:focus:border-yellow-500 focus:ring-0 transition-all"
                 />
               </div>
               <div className="flex gap-3 pt-4">
-                <Button type="submit" variant="primary" fullWidth>
+                <button
+                  type="submit"
+                  className="flex-1 px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold shadow-lg hover:shadow-xl active:scale-95 transition-all"
+                >
                   Add Usage
-                </Button>
-                <Button
+                </button>
+                <button
                   type="button"
-                  variant="outline"
-                  fullWidth
                   onClick={() => setShowModal(false)}
+                  className="flex-1 px-6 py-4 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 active:scale-95 transition-all"
                 >
                   Cancel
-                </Button>
+                </button>
               </div>
             </form>
           </div>

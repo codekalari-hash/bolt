@@ -1,13 +1,34 @@
-import { User, Award, TrendingDown, Calendar } from 'lucide-react';
+import { User, Award, TrendingDown, Calendar, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
+import { useAuth } from '../contexts/AuthContext';
 import { userData } from '../services/dummyData';
 
 export function Profile() {
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
+  };
+
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Profile</h1>
+    <div className="space-y-6 pb-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
+          Profile
+        </h1>
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20 active:scale-95 transition-all"
+        >
+          <LogOut className="w-4 h-4" />
+          <span className="text-sm font-semibold">Sign Out</span>
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">

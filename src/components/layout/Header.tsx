@@ -1,65 +1,45 @@
-import { Menu, Moon, Sun, LogOut, User } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Moon, Sun, Leaf } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 
-interface HeaderProps {
-  onMenuClick: () => void;
-}
-
-export function Header({ onMenuClick }: HeaderProps) {
+export function Header() {
   const { theme, toggleTheme } = useTheme();
-  const { profile, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/login');
-  };
+  const { profile } = useAuth();
 
   return (
-    <header className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div className="flex items-center justify-between px-4 py-3">
-        <button
-          onClick={onMenuClick}
-          className="lg:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
+    <header className="fixed top-0 left-0 right-0 z-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50">
+      <div className="flex items-center justify-between px-20 py-3">
+        <div className="flex items-center gap-2">
+          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg">
+            <Leaf className="w-5 h-5 text-white" strokeWidth={2.5} />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
+              EcoSphere
+            </h1>
+          </div>
+        </div>
 
-        <div className="flex-1 lg:flex-none" />
+        <div className="flex items-center gap-2">
+          {profile && (
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-200 dark:border-emerald-800">
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">
+                {profile.name.charAt(0).toUpperCase()}
+              </div>
+            </div>
+          )}
 
-        <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
             aria-label="Toggle theme"
           >
             {theme === 'light' ? (
-              <Moon className="w-5 h-5" />
+              <Moon className="w-4 h-4 text-gray-700" />
             ) : (
-              <Sun className="w-5 h-5" />
+              <Sun className="w-4 h-4 text-yellow-400" />
             )}
           </button>
-
-          {profile && (
-            <>
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {profile.name}
-                </span>
-              </div>
-
-              <button
-                onClick={handleSignOut}
-                className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                aria-label="Sign out"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
-            </>
-          )}
         </div>
       </div>
     </header>

@@ -1,26 +1,22 @@
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from './Sidebar';
+import { BottomNav } from './BottomNav';
+import { FloatingMenu } from './FloatingMenu';
 import { Header } from './Header';
 import { InstallPrompt } from '../InstallPrompt';
 
 export function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className="flex h-screen bg-gradient-to-br from-card via-background to-primary/5 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="flex flex-col h-screen bg-gradient-to-br from-emerald-50 via-white to-cyan-50 dark:from-gray-950 dark:via-gray-900 dark:to-emerald-950">
+      <Header />
+      <FloatingMenu />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header onMenuClick={() => setSidebarOpen(true)} />
+      <main className="flex-1 overflow-x-hidden overflow-y-auto pb-20 pt-16">
+        <div className="px-4 py-6 max-w-2xl mx-auto">
+          <Outlet />
+        </div>
+      </main>
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 lg:p-8">
-          <div className="max-w-7xl mx-auto">
-            <Outlet />
-          </div>
-        </main>
-      </div>
-
+      <BottomNav />
       <InstallPrompt />
     </div>
   );
