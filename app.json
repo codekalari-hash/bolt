@@ -9,18 +9,32 @@
       "resizeMode": "contain",
       "backgroundColor": "#10b981"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ecosphere.app"
+      "bundleIdentifier": "com.ecosphere.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "EcoSphere needs camera access to scan product barcodes",
+        "NSPhotoLibraryUsageDescription": "EcoSphere needs photo library access"
+      }
     },
     "android": {
       "package": "com.ecosphere.app",
       "adaptiveIcon": {
         "backgroundColor": "#10b981"
-      }
+      },
+      "permissions": [
+        "CAMERA"
+      ]
     },
     "plugins": [
-      "expo-font"
-    ]
+      "expo-router"
+    ],
+    "scheme": "ecosphere",
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }

@@ -1,0 +1,23 @@
+=====================================================
+     ECOSPHERE - RUN ON YOUR PHONE
+=====================================================
+
+STEP 1: Install Expo Go on your phone
+        - iPhone: App Store → Search "Expo Go"
+        - Android: Play Store → Search "Expo Go"
+
+STEP 2: Run these commands in your terminal:
+
+        bash switch-to-mobile.sh
+        npm start
+
+STEP 3: Scan the QR code
+        - iPhone: Use Camera app
+        - Android: Use Expo Go app
+
+IMPORTANT: Your phone and computer must be on the
+          same Wi-Fi network!
+
+For detailed instructions, read: RUN_ON_PHONE.md
+
+=====================================================
