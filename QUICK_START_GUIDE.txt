@@ -1,0 +1,55 @@
+═══════════════════════════════════════════════════════════
+           ECOSPHERE - QUICK START GUIDE
+═══════════════════════════════════════════════════════════
+
+STEP 1: EXTRACT THE ZIP
+------------------------
+Extract ecosphere-complete.zip to a folder
+
+STEP 2: OPEN TERMINAL
+----------------------
+Open terminal/command prompt in the extracted folder
+
+STEP 3: CHOOSE YOUR VERSION
+----------------------------
+
+┌─────────────────────────────────────────────────────┐
+│  WEB VERSION (Browser)                              │
+├─────────────────────────────────────────────────────┤
+│  npm install                                        │
+│  npm run dev                                        │
+│                                                     │
+│  Then open: http://localhost:5173                  │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  MOBILE VERSION (Phone)                             │
+├─────────────────────────────────────────────────────┤
+│  1. Install "Expo Go" app on your phone             │
+│  2. bash switch-to-mobile.sh                        │
+│  3. npm start                                       │
+│  4. Scan QR code with Expo Go app                   │
+│                                                     │
+│  IMPORTANT: Same Wi-Fi network required!            │
+└─────────────────────────────────────────────────────┘
+
+STEP 4: CREATE ACCOUNT
+-----------------------
+Register with email and password
+Sample data will load automatically
+
+TROUBLESHOOTING
+---------------
+Module errors:     rm -rf node_modules && npm install
+Won't start:       bash switch-to-web.sh && npm install
+Build errors:      npm run build
+
+DOCUMENTATION
+-------------
+HOW_TO_RUN.md               - Complete setup guide
+PHONE_APP_QUICKSTART.md     - Mobile app details
+RUN_ON_PHONE.md             - Phone setup steps
+
+═══════════════════════════════════════════════════════════
+           Questions? Read HOW_TO_RUN.md
+═══════════════════════════════════════════════════════════
