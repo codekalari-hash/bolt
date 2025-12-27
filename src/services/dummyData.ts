@@ -1,0 +1,433 @@
+export const dashboardData = {
+  carbonSummary: {
+    today: 4.2,
+    week: 28.5,
+    month: 112.3,
+    target: 150,
+  },
+  weeklyTrend: [
+    { label: 'Mon', value: 3.8 },
+    { label: 'Tue', value: 4.1 },
+    { label: 'Wed', value: 3.9 },
+    { label: 'Thu', value: 4.5 },
+    { label: 'Fri', value: 4.0 },
+    { label: 'Sat', value: 4.2 },
+    { label: 'Sun', value: 4.0 },
+  ],
+  categoryBreakdown: [
+    { label: 'Transport', value: 35, color: 'bg-blue-500' },
+    { label: 'Energy', value: 28, color: 'bg-yellow-500' },
+    { label: 'Food', value: 22, color: 'bg-green-500' },
+    { label: 'Waste', value: 15, color: 'bg-red-500' },
+  ],
+};
+
+export const inventoryItems = [
+  {
+    id: 1,
+    name: 'Organic Milk',
+    category: 'Dairy',
+    quantity: 2,
+    unit: 'liter',
+    expiryDate: '2025-12-30',
+    carbonScore: 2.1,
+    daysUntilExpiry: 3,
+  },
+  {
+    id: 2,
+    name: 'Free-Range Eggs',
+    category: 'Dairy',
+    quantity: 12,
+    unit: 'pieces',
+    expiryDate: '2026-01-05',
+    carbonScore: 1.8,
+    daysUntilExpiry: 9,
+  },
+  {
+    id: 3,
+    name: 'Whole Grain Bread',
+    category: 'Bakery',
+    quantity: 1,
+    unit: 'loaf',
+    expiryDate: '2025-12-28',
+    carbonScore: 0.9,
+    daysUntilExpiry: 1,
+  },
+  {
+    id: 4,
+    name: 'Fresh Spinach',
+    category: 'Vegetables',
+    quantity: 500,
+    unit: 'grams',
+    expiryDate: '2025-12-29',
+    carbonScore: 0.4,
+    daysUntilExpiry: 2,
+  },
+  {
+    id: 5,
+    name: 'Chicken Breast',
+    category: 'Meat',
+    quantity: 750,
+    unit: 'grams',
+    expiryDate: '2025-12-31',
+    carbonScore: 4.2,
+    daysUntilExpiry: 4,
+  },
+];
+
+export const ecoMilesData = {
+  weeklyDistance: 145.8,
+  weeklyEmissions: 24.3,
+  trips: [
+    {
+      id: 1,
+      date: '2025-12-27',
+      from: 'Home',
+      to: 'Office',
+      distance: 12.5,
+      mode: 'Car',
+      emissions: 2.1,
+    },
+    {
+      id: 2,
+      date: '2025-12-26',
+      from: 'Office',
+      to: 'Gym',
+      distance: 3.2,
+      mode: 'Bicycle',
+      emissions: 0,
+    },
+    {
+      id: 3,
+      date: '2025-12-26',
+      from: 'Gym',
+      to: 'Home',
+      distance: 8.7,
+      mode: 'Public Transport',
+      emissions: 0.8,
+    },
+  ],
+  modeBreakdown: [
+    { label: 'Car', value: 45, color: 'red-500' },
+    { label: 'Public Transport', value: 30, color: 'blue-500' },
+    { label: 'Bicycle', value: 25, color: 'green-500' },
+  ],
+};
+
+export const ecoWattData = {
+  monthlyUsage: 342,
+  monthlyCost: 58.2,
+  dailyTrend: [
+    { label: '20', value: 11.2 },
+    { label: '21', value: 10.8 },
+    { label: '22', value: 12.1 },
+    { label: '23', value: 11.5 },
+    { label: '24', value: 10.9 },
+    { label: '25', value: 11.8 },
+    { label: '26', value: 12.3 },
+  ],
+  appliances: [
+    { name: 'Air Conditioner', usage: 145, percentage: 42 },
+    { name: 'Refrigerator', usage: 68, percentage: 20 },
+    { name: 'Water Heater', usage: 51, percentage: 15 },
+    { name: 'Lighting', usage: 41, percentage: 12 },
+    { name: 'Others', usage: 37, percentage: 11 },
+  ],
+};
+
+export const ecoPlateData = {
+  weeklyMeals: 21,
+  avgCarbonPerMeal: 2.8,
+  mealHistory: [
+    {
+      id: 1,
+      name: 'Grilled Chicken Salad',
+      date: '2025-12-27',
+      type: 'Lunch',
+      carbonScore: 3.2,
+      distance: 5.2,
+      local: true,
+    },
+    {
+      id: 2,
+      name: 'Vegetable Stir Fry',
+      date: '2025-12-26',
+      type: 'Dinner',
+      carbonScore: 1.8,
+      distance: 2.1,
+      local: true,
+    },
+    {
+      id: 3,
+      name: 'Beef Burger',
+      date: '2025-12-26',
+      type: 'Lunch',
+      carbonScore: 5.4,
+      distance: 12.5,
+      local: false,
+    },
+  ],
+  dietBreakdown: [
+    { label: 'Vegetables', value: 40, color: 'green-500' },
+    { label: 'Grains', value: 25, color: 'yellow-500' },
+    { label: 'Protein', value: 20, color: 'red-500' },
+    { label: 'Dairy', value: 15, color: 'blue-500' },
+  ],
+};
+
+export const ecoCycleData = {
+  monthlyWaste: 28.5,
+  recyclingRate: 68,
+  wasteCategories: [
+    { label: 'Recycled', value: 19.4, color: 'green-500' },
+    { label: 'Composted', value: 5.7, color: 'yellow-500' },
+    { label: 'Landfill', value: 3.4, color: 'red-500' },
+  ],
+  recentActions: [
+    { id: 1, date: '2025-12-27', type: 'Recycling', items: 'Paper, Plastic', weight: 1.2 },
+    { id: 2, date: '2025-12-26', type: 'Composting', items: 'Food scraps', weight: 0.8 },
+    { id: 3, date: '2025-12-25', type: 'Recycling', items: 'Glass bottles', weight: 2.1 },
+  ],
+};
+
+export const leaderboardData = [
+  { rank: 1, name: 'Sarah Green', score: 1245, avatar: '🌟', change: 2 },
+  { rank: 2, name: 'Mike Eco', score: 1198, avatar: '🌿', change: -1 },
+  { rank: 3, name: 'Emma Earth', score: 1156, avatar: '🌍', change: 1 },
+  { rank: 4, name: 'John Climate', score: 1089, avatar: '☀️', change: 0 },
+  { rank: 5, name: 'Lisa Nature', score: 1045, avatar: '🌱', change: 3 },
+  { rank: 6, name: 'You', score: 987, avatar: '👤', change: -2 },
+  { rank: 7, name: 'David Forest', score: 945, avatar: '🌲', change: 1 },
+  { rank: 8, name: 'Anna Ocean', score: 912, avatar: '🌊', change: 0 },
+];
+
+export const communityData = {
+  groups: [
+    {
+      id: 1,
+      name: 'Zero Waste Warriors',
+      members: 1234,
+      description: 'Community focused on reducing waste to zero',
+      category: 'Waste',
+    },
+    {
+      id: 2,
+      name: 'Green Commuters',
+      members: 892,
+      description: 'Promoting eco-friendly transportation',
+      category: 'Transport',
+    },
+    {
+      id: 3,
+      name: 'Plant-Based Pioneers',
+      members: 1567,
+      description: 'Exploring sustainable eating habits',
+      category: 'Food',
+    },
+  ],
+  challenges: [
+    {
+      id: 1,
+      title: 'Plastic-Free Week',
+      description: 'Go one week without single-use plastics',
+      participants: 567,
+      endsIn: '3 days',
+      progress: 65,
+    },
+    {
+      id: 2,
+      title: 'Bike to Work',
+      description: 'Cycle to work for 5 consecutive days',
+      participants: 423,
+      endsIn: '1 week',
+      progress: 40,
+    },
+    {
+      id: 3,
+      title: 'Meatless Monday',
+      description: 'Four weeks of plant-based Mondays',
+      participants: 891,
+      endsIn: '2 weeks',
+      progress: 75,
+    },
+  ],
+  events: [
+    {
+      id: 1,
+      title: 'Community Clean-Up',
+      date: '2026-01-05',
+      location: 'Central Park',
+      attendees: 45,
+    },
+    {
+      id: 2,
+      title: 'Sustainable Living Workshop',
+      date: '2026-01-12',
+      location: 'Online',
+      attendees: 128,
+    },
+  ],
+};
+
+export const alertsData = [
+  {
+    id: 1,
+    type: 'warning',
+    title: 'Item Expiring Soon',
+    message: 'Whole Grain Bread expires in 1 day',
+    date: '2025-12-27',
+    read: false,
+  },
+  {
+    id: 2,
+    type: 'success',
+    title: 'Goal Achieved',
+    message: 'You met your weekly carbon reduction goal!',
+    date: '2025-12-26',
+    read: false,
+  },
+  {
+    id: 3,
+    type: 'info',
+    title: 'New Challenge',
+    message: 'Join the Plastic-Free Week challenge',
+    date: '2025-12-25',
+    read: true,
+  },
+  {
+    id: 4,
+    type: 'danger',
+    title: 'High Carbon Day',
+    message: 'Your emissions were 45% above average yesterday',
+    date: '2025-12-24',
+    read: true,
+  },
+];
+
+export const badgesData = [
+  {
+    id: 1,
+    name: 'Early Adopter',
+    description: 'Joined EcoSphere in its first month',
+    icon: '🌟',
+    earned: true,
+    date: '2025-11-15',
+  },
+  {
+    id: 2,
+    name: 'Carbon Reducer',
+    description: 'Reduced carbon footprint by 20%',
+    icon: '📉',
+    earned: true,
+    date: '2025-12-10',
+  },
+  {
+    id: 3,
+    name: 'Recycling Champion',
+    description: 'Recycled 100kg of waste',
+    icon: '♻️',
+    earned: true,
+    date: '2025-12-18',
+  },
+  {
+    id: 4,
+    name: 'Green Commuter',
+    description: 'Used eco-friendly transport for 30 days',
+    icon: '🚴',
+    earned: false,
+    progress: 73,
+  },
+  {
+    id: 5,
+    name: 'Zero Waste Hero',
+    description: 'Achieved 90% recycling rate',
+    icon: '🌍',
+    earned: false,
+    progress: 68,
+  },
+  {
+    id: 6,
+    name: 'Community Leader',
+    description: 'Organized 5 community events',
+    icon: '👥',
+    earned: false,
+    progress: 40,
+  },
+];
+
+export const shopProducts = [
+  {
+    id: 1,
+    name: 'Reusable Water Bottle',
+    description: 'Stainless steel, 750ml capacity',
+    price: 24.99,
+    carbonSaved: 156,
+    image: 'https://images.pexels.com/photos/3737117/pexels-photo-3737117.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Essentials',
+    rating: 4.8,
+  },
+  {
+    id: 2,
+    name: 'Bamboo Cutlery Set',
+    description: 'Travel-friendly, includes pouch',
+    price: 15.99,
+    carbonSaved: 89,
+    image: 'https://images.pexels.com/photos/4207892/pexels-photo-4207892.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Kitchen',
+    rating: 4.6,
+  },
+  {
+    id: 3,
+    name: 'Solar Power Bank',
+    description: '20000mAh, dual USB ports',
+    price: 45.99,
+    carbonSaved: 234,
+    image: 'https://images.pexels.com/photos/4219861/pexels-photo-4219861.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Electronics',
+    rating: 4.7,
+  },
+  {
+    id: 4,
+    name: 'Organic Cotton Tote Bag',
+    description: 'Large capacity, machine washable',
+    price: 12.99,
+    carbonSaved: 67,
+    image: 'https://images.pexels.com/photos/7262942/pexels-photo-7262942.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Bags',
+    rating: 4.9,
+  },
+  {
+    id: 5,
+    name: 'Beeswax Food Wraps',
+    description: 'Set of 5, various sizes',
+    price: 18.99,
+    carbonSaved: 112,
+    image: 'https://images.pexels.com/photos/6621460/pexels-photo-6621460.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Kitchen',
+    rating: 4.5,
+  },
+  {
+    id: 6,
+    name: 'LED Smart Bulbs',
+    description: 'Pack of 4, app controlled',
+    price: 34.99,
+    carbonSaved: 445,
+    image: 'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=400',
+    category: 'Home',
+    rating: 4.7,
+  },
+];
+
+export const userData = {
+  name: 'Alex Johnson',
+  email: 'alex.johnson@example.com',
+  joinDate: '2025-11-15',
+  totalCarbonSaved: 1245.8,
+  rank: 6,
+  level: 12,
+  goals: {
+    daily: 5.0,
+    weekly: 35.0,
+    monthly: 150.0,
+  },
+};
