@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, AlertTriangle, Package } from 'lucide-react';
-import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/Card';
+import { Card, CardBody } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Input } from '../components/ui/Input';

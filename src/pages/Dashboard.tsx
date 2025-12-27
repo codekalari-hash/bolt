@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TrendingDown, TrendingUp, Target, Zap } from 'lucide-react';
-import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/Card';
 import { LineChart, BarChart } from '../components/ui/Chart';
-import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { getCarbonSummary, getWeeklyTrend, getCategoryBreakdown } from '../services/database';
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Zap, TrendingUp, DollarSign, Lightbulb, Plus, X } from 'lucide-react';
-import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/Card';
 import { LineChart, BarChart } from '../components/ui/Chart';
-import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAuth } from '../contexts/AuthContext';
 import {
