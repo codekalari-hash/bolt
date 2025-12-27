@@ -1,14 +1,99 @@
-import { Zap, TrendingUp, DollarSign, Lightbulb } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Zap, TrendingUp, DollarSign, Lightbulb, Plus, X } from 'lucide-react';
 import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/Card';
 import { LineChart, BarChart } from '../components/ui/Chart';
-import { ecoWattData } from '../services/dummyData';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { useAuth } from '../contexts/AuthContext';
+import {
+  getEnergyUsageSummary,
+  getEnergyDailyTrend,
+  getApplianceBreakdown,
+  addEnergyUsage,
+} from '../services/database';
 
 export function EcoWatt() {
-  const { monthlyUsage, monthlyCost, dailyTrend, appliances } = ecoWattData;
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [summary, setSummary] = useState({ monthlyUsage: 0, monthlyCost: 0, changePercentage: 0 });
+  const [dailyTrend, setDailyTrend] = useState<Array<{ label: string; value: number }>>([]);
+  const [appliances, setAppliances] = useState<Array<{ name: string; usage: number; percentage: number }>>([]);
+  const [formData, setFormData] = useState({
+    date: new Date().toISOString().split('T')[0],
+    appliance_name: '',
+    usage_kwh: '',
+    cost: '',
+  });
+
+  useEffect(() => {
+    if (user) {
+      loadEnergyData();
+    }
+  }, [user]);
+
+  const loadEnergyData = async () => {
+    if (!user) return;
+
+    try {
+      const [summaryData, trendData, applianceData] = await Promise.all([
+        getEnergyUsageSummary(user.id),
+        getEnergyDailyTrend(user.id),
+        getApplianceBreakdown(user.id),
+      ]);
+
+      setSummary(summaryData);
+      setDailyTrend(trendData);
+      setAppliances(applianceData);
+    } catch (error) {
+      console.error('Error loading energy data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    try {
+      await addEnergyUsage(user.id, {
+        date: formData.date,
+        appliance_name: formData.appliance_name,
+        usage_kwh: parseFloat(formData.usage_kwh),
+        cost: parseFloat(formData.cost),
+      });
+
+      setShowModal(false);
+      setFormData({
+        date: new Date().toISOString().split('T')[0],
+        appliance_name: '',
+        usage_kwh: '',
+        cost: '',
+      });
+      loadEnergyData();
+    } catch (error) {
+      console.error('Error adding energy usage:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg text-gray-600 dark:text-gray-400">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">EcoWatt</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">EcoWatt</h1>
+        <Button onClick={() => setShowModal(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Usage
+        </Button>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
@@ -20,7 +105,7 @@ export function EcoWatt() {
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Monthly Usage</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {monthlyUsage} kWh
+                  {summary.monthlyUsage} kWh
                 </p>
               </div>
             </div>
@@ -36,7 +121,7 @@ export function EcoWatt() {
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Monthly Cost</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                  ${monthlyCost}
+                  ${summary.monthlyCost}
                 </p>
               </div>
             </div>
@@ -51,7 +136,9 @@ export function EcoWatt() {
               </div>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">vs Last Month</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">+5%</p>
+                <p className={`text-2xl font-bold ${summary.changePercentage > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                  {summary.changePercentage > 0 ? '+' : ''}{summary.changePercentage}%
+                </p>
               </div>
             </div>
           </CardBody>
@@ -72,13 +159,19 @@ export function EcoWatt() {
           <CardTitle>Appliance Breakdown</CardTitle>
         </CardHeader>
         <CardBody>
-          <BarChart
-            data={appliances.map((a) => ({
-              label: a.name,
-              value: a.usage,
-              color: 'bg-yellow-500',
-            }))}
-          />
+          {appliances.length > 0 ? (
+            <BarChart
+              data={appliances.map((a) => ({
+                label: a.name,
+                value: a.usage,
+                color: 'bg-yellow-500',
+              }))}
+            />
+          ) : (
+            <p className="text-center text-gray-600 dark:text-gray-400 py-8">
+              No appliance data available. Add your first energy usage entry to see breakdown.
+            </p>
+          )}
         </CardBody>
       </Card>
 
@@ -98,6 +191,88 @@ export function EcoWatt() {
           </ul>
         </CardBody>
       </Card>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                Add Energy Usage
+              </h2>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Date
+                </label>
+                <Input
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Appliance Name
+                </label>
+                <Input
+                  type="text"
+                  placeholder="e.g., Air Conditioner"
+                  value={formData.appliance_name}
+                  onChange={(e) => setFormData({ ...formData, appliance_name: e.target.value })}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Usage (kWh)
+                </label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  placeholder="e.g., 12.5"
+                  value={formData.usage_kwh}
+                  onChange={(e) => setFormData({ ...formData, usage_kwh: e.target.value })}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Cost ($)
+                </label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g., 2.15"
+                  value={formData.cost}
+                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="flex gap-3 pt-4">
+                <Button type="submit" variant="primary" fullWidth>
+                  Add Usage
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  fullWidth
+                  onClick={() => setShowModal(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

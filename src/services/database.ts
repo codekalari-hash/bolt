@@ -226,3 +226,110 @@ export async function getUserChallenges(userId: string) {
   if (error) throw error;
   return data || [];
 }
+
+export async function getEnergyUsage(userId: string) {
+  const { data, error } = await supabase
+    .from('energy_usage')
+    .select('*')
+    .eq('user_id', userId)
+    .order('date', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+}
+
+export async function getEnergyUsageSummary(userId: string) {
+  const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const lastMonthAgo = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  const { data: currentMonth } = await supabase
+    .from('energy_usage')
+    .select('usage_kwh, cost')
+    .eq('user_id', userId)
+    .gte('date', monthAgo);
+
+  const { data: lastMonth } = await supabase
+    .from('energy_usage')
+    .select('usage_kwh')
+    .eq('user_id', userId)
+    .gte('date', lastMonthAgo)
+    .lt('date', monthAgo);
+
+  const monthlyUsage = currentMonth?.reduce((sum, item) => sum + Number(item.usage_kwh), 0) || 0;
+  const monthlyCost = currentMonth?.reduce((sum, item) => sum + Number(item.cost), 0) || 0;
+  const lastMonthUsage = lastMonth?.reduce((sum, item) => sum + Number(item.usage_kwh), 0) || 0;
+
+  const changePercentage = lastMonthUsage > 0
+    ? ((monthlyUsage - lastMonthUsage) / lastMonthUsage) * 100
+    : 0;
+
+  return {
+    monthlyUsage: Math.round(monthlyUsage * 10) / 10,
+    monthlyCost: Math.round(monthlyCost * 100) / 100,
+    changePercentage: Math.round(changePercentage),
+  };
+}
+
+export async function getEnergyDailyTrend(userId: string) {
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  const { data } = await supabase
+    .from('energy_usage')
+    .select('date, usage_kwh')
+    .eq('user_id', userId)
+    .gte('date', sevenDaysAgo)
+    .order('date', { ascending: true });
+
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const result = days.map((label, index) => {
+    const date = new Date(Date.now() - (6 - index) * 24 * 60 * 60 * 1000);
+    const dateStr = date.toISOString().split('T')[0];
+    const dayData = data?.filter(d => d.date === dateStr);
+    const value = dayData?.reduce((sum, item) => sum + Number(item.usage_kwh), 0) || 0;
+    return { label, value: Math.round(value * 10) / 10 };
+  });
+
+  return result;
+}
+
+export async function getApplianceBreakdown(userId: string) {
+  const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  const { data } = await supabase
+    .from('energy_usage')
+    .select('appliance_name, usage_kwh')
+    .eq('user_id', userId)
+    .gte('date', monthAgo);
+
+  const appliances: Record<string, number> = {};
+  data?.forEach(item => {
+    const name = item.appliance_name || 'Others';
+    appliances[name] = (appliances[name] || 0) + Number(item.usage_kwh);
+  });
+
+  const total = Object.values(appliances).reduce((sum, val) => sum + val, 0);
+
+  return Object.entries(appliances)
+    .map(([name, usage]) => ({
+      name,
+      usage: Math.round(usage),
+      percentage: total > 0 ? Math.round((usage / total) * 100) : 0,
+    }))
+    .sort((a, b) => b.usage - a.usage);
+}
+
+export async function addEnergyUsage(userId: string, data: {
+  date: string;
+  appliance_name: string;
+  usage_kwh: number;
+  cost: number;
+}) {
+  const { error } = await supabase
+    .from('energy_usage')
+    .insert({
+      user_id: userId,
+      ...data,
+    });
+
+  if (error) throw error;
+}
