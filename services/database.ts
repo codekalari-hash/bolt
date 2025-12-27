@@ -51,3 +51,33 @@ export async function getCategoryBreakdown(userId: string) {
     { label: 'Waste', value: 10, color: '#ef4444' },
   ];
 }
+
+export async function getInventoryItems(userId: string) {
+  const { data, error } = await supabase
+    .from('inventory_items')
+    .select('*')
+    .eq('user_id', userId)
+    .order('expiry_date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching inventory:', error);
+    return [];
+  }
+
+  return (data || []).map(item => {
+    const expiryDate = new Date(item.expiry_date);
+    const today = new Date();
+    const daysUntilExpiry = Math.ceil((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+    return {
+      id: item.id,
+      name: item.name,
+      category: item.category || 'Others',
+      quantity: item.quantity,
+      unit: item.unit || 'pcs',
+      carbonScore: item.carbon_score || 0,
+      expiryDate: expiryDate.toLocaleDateString(),
+      daysUntilExpiry,
+    };
+  });
+}
